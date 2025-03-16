@@ -11,9 +11,11 @@ export default function App() {
     const newProducts = await apiFetch.get(
       `${config.siteUrl}products?${config.wcCredentials}`,
     );
-    console.log(newProducts);
+    console.log('newProducts', newProducts);
     //setProducts(newProducts);
   };
+
+  fetchProducts();
 
   return (
     <View style={styles.container}>

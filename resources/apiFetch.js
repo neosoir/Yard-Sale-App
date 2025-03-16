@@ -4,7 +4,7 @@ const get = async url => {
   try {
     const res = await fetch(url, {
       headers: {
-        //Authorization: config.liveLinkCredentials,
+        'Content-Type': 'application/json',
       },
     });
     const resJSON = await res.json();
@@ -19,7 +19,6 @@ const post = async (url, body) => {
     const res = await fetch(url, {
       method: 'POST',
       headers: {
-        //Authorization: config.liveLinkCredentials,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
