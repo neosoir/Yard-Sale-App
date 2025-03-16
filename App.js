@@ -1,21 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import apiFetch from './resources/apiFetch';
-import config from './resources/config';
+import api from './resources/config';
 
 
 export default function App() {
 
+  if (typeof api.get !== 'function') {
+    console.error('El método api.get no está definido o la instancia no es válida');
+} else {
+    api.get('products')
+        .then((response) => console.log(response.data))
+        .catch((error) => console.error(error));
+}
 
-  const fetchProducts = async () => {
-    const newProducts = await apiFetch.get(
-      `${config.siteUrl}products?${config.wcCredentials}`,
-    );
-    console.log('newProducts', newProducts);
-    //setProducts(newProducts);
-  };
-
-  fetchProducts();
 
   return (
     <View style={styles.container}>
