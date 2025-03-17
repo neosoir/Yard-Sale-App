@@ -2,13 +2,10 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": ["./*"]
-    },
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
+      "@/*": [
+        "./*"
+      ]
+    }
   },
-  "include": ["src", "images.d.ts"],
   "extends": "expo/tsconfig.base"
 }
