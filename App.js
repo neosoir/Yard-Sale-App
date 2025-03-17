@@ -11,10 +11,8 @@ export default function App() {
             node {
               id
               name
-              ... on SimpleProduct {
-                id
-                name
-                price
+              image {
+                sourceUrl
               }
             }
           }
