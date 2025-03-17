@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import Context from './Context';
-import config from '../resources/config';
 import apiFetch from '../resources/apiFetch';
 
 const GlobalState = props => {
