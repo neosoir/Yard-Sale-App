@@ -9,6 +9,7 @@ export default function RootLayout() {
         <Stack.Screen name="products" />
         <Stack.Screen name="cart" />
         <Stack.Screen name="checkout" />
+        <Stack.Screen name="+not-found" />
       </Stack>
     </GlobalState>
   );
