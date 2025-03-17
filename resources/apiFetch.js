@@ -1,38 +1,25 @@
-import config from './config';
+const graphqlEndpoint = process.env.EXPO_PUBLIC_SITE_URL + "graphql";
 
-const get = async url => {
+const graphqlFetch = async (query, variables = {}) => {
   try {
-    const res = await fetch(url, {
+    const res = await fetch(graphqlEndpoint, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-    });
-    const resJSON = await res.json();
-    return resJSON;
-  } catch (error) {
-    console.error('apiFetch get error', error);
-  }
-};
-
-const post = async (url, body) => {
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
+      body: JSON.stringify({
+        query,
+        variables,
+      }),
     });
 
     const resJSON = await res.json();
-
     return resJSON;
   } catch (error) {
-    console.error('apiFetch post error', error);
+    console.error("GraphQL Fetch Error:", error);
   }
 };
 
 export default {
-  get,
-  post,
+  graphqlFetch,
 };

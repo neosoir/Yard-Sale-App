@@ -1,18 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import apiFetch from './resources/apiFetch';
-import config from './resources/config';
-
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import apiFetch from "./resources/apiFetch";
 
 export default function App() {
-
-
   const fetchProducts = async () => {
-    const newProducts = await apiFetch.get(
-      `${config.siteUrl}products?${config.wcCredentials}`,
-    );
-    console.log('newProducts', newProducts);
-    //setProducts(newProducts);
+    const query = `
+      {
+        products(first: 10) {
+          edges {
+            node {
+              id
+              name
+              ... on SimpleProduct {
+                id
+                name
+                price
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    const response = await apiFetch.graphqlFetch(query);
+    console.log("Productos obtenidos:", response);
   };
 
   fetchProducts();
@@ -28,8 +39,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
