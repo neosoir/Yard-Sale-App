@@ -8,9 +8,8 @@ import {
   Pressable,
 } from 'react-native';
 
-import {colors} from '../../resources/constants';
-import config from '../../resources/config';
-import Context from '../../context/Context';
+import config from '@/resources/config';
+import Context from '@/context/Context';
 
 import addIcon from '../../assets/images/product/add-to-cart-icon.png';
 import removeIcon from '../../assets/images/product/remove-from-cart-icon.png';
@@ -48,7 +47,7 @@ const ProductItem = props => {
           source={{
             uri: images[0].src,
             headers: {
-              Authorization: config.liveLinkCredentials,
+              //Authorization: config.liveLinkCredentials,
             },
           }}
         />
@@ -88,11 +87,11 @@ const styles = StyleSheet.create({
     width: '70%',
   },
   itemTitle: {
-    color: colors.darkGrey,
+    //color: colors.darkGrey,
     fontWeight: '300',
   },
   itemPrice: {
-    color: colors.darkGrey,
+    //color: colors.darkGrey,
     fontWeight: 'bold',
   },
   itemBtn: {
