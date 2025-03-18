@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { StyleSheet, Dimensions, Text, View, Image, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';  
+import { Link, useRouter } from 'expo-router';  
 import {colors} from '@/resources/constants';
 import Context from '@/context/Context';
 import addIcon from '@/assets/images/product/add-to-cart-icon.png';
@@ -30,13 +30,15 @@ const ProductItem = ({item}) => {
 
   return (
     <View key={id} style={styles.itemContainer}>
-      <Pressable onPress={() => router.push(`/product-details/${id}`)}> 
+      <Link href={`/product-details/${id}`} asChild>
+      
         <Image
           resizeMode="cover"
           style={styles.itemImage}
           source={{ uri: image.sourceUrl }}
         />
-      </Pressable>
+      </Link>
+
       <View style={styles.itemData}>
         <View style={styles.itemMeta}>
           <Text style={styles.itemPrice}>{`$ ${price}`}</Text>

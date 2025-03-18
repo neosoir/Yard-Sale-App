@@ -1,0 +1,40 @@
+import { useLocalSearchParams } from "expo-router";
+import { View, Text, Image, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
+import { colors } from "@/resources/constants";
+
+const ProductDetails = () => {
+  const { id } = useLocalSearchParams(); // 🔹 Obtener ID de la URL
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    // 🔹 Simulación de obtención de datos (Reemplazar con GraphQL)
+    const fetchProduct = async () => {
+      const response = await fetch(`https://api.tienda.com/productos/${id}`);
+      const data = await response.json();
+      setProduct(data);
+    };
+    fetchProduct();
+  }, [id]);
+
+  if (!product) return <Text>Cargando...</Text>;
+
+  return (
+    <View style={styles.container}>
+      <Image source={{ uri: product.image }} style={styles.image} />
+      <Text style={styles.name}>{product.name}</Text>
+      <Text style={styles.price}>${product.price} USD</Text>
+      <Text style={styles.description}>{product.description}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  image: { width: "100%", height: 300, resizeMode: "cover" },
+  name: { fontSize: 24, fontWeight: "bold", marginTop: 16 },
+  price: { fontSize: 20, color: colors.primary, marginVertical: 8 },
+  description: { fontSize: 16, color: "#666" },
+});
+
+export default ProductDetails;
