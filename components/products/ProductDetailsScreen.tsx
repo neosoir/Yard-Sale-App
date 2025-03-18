@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useContext } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   StyleSheet,
   Dimensions,
@@ -10,27 +10,28 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
-import Header from '../header/Header';
-import Context from '../../context/Context';
-import config from '../../resources/config';
-import {sizes, colors} from '../../resources/constants';
+import Header from '@/components/header/Header';
+import Context from '@/context/Context';
+import config from '@/resources/config';
+import { sizes, colors } from '@/resources/constants';
 
-const ProductDetailsScreen = props => {
-  const {route} = props;
-  const {id, name, price, description, images} = route.params.product;
-  const {thisProductIsInCart, addProduct, deleteProduct} = useContext(Context);
+const ProductDetailsScreen = () => {
+  const router = useRouter();
+  const { id, name, price, description, image } = useLocalSearchParams();
+  const { thisProductIsInCart, addProduct, deleteProduct } = useContext(Context);
 
   return (
     <SafeAreaView>
-      <Header {...props} />
+      <Header />
       <ScrollView style={styles.container}>
         <View style={styles.imageContainer}>
           <Image
             resizeMode="cover"
             style={styles.itemImage}
             source={{
-              uri: images[0].src,
+              uri: image,
               headers: {
                 Authorization: config.liveLinkCredentials,
               },
@@ -38,10 +39,10 @@ const ProductDetailsScreen = props => {
           />
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.itemPrice}>{`$ ${price}`}</Text>
+          <Text style={styles.itemPrice}>{price}</Text>
           <Text style={styles.itemTitle}>{name}</Text>
           <Text style={styles.itemDescription}>
-            {description.replace(/<[^>]+>/g, '') || 'Lorem Lorem Lorem Lorem'}
+            {description?.replace(/<[^>]+>/g, '') || 'No description available'}
           </Text>
         </View>
       </ScrollView>
@@ -49,14 +50,16 @@ const ProductDetailsScreen = props => {
         {thisProductIsInCart(id) ? (
           <Pressable
             style={styles.buttonDelete}
-            onPress={() => deleteProduct(id)}>
-            <Text style={styles.buttonTextDelete}>Delete from kart</Text>
+            onPress={() => deleteProduct(id)}
+          >
+            <Text style={styles.buttonTextDelete}>Remove from cart</Text>
           </Pressable>
         ) : (
           <Pressable
             style={styles.buttonAdd}
-            onPress={() => addProduct(route.params.product)}>
-            <Text style={styles.buttonTextAdd}>Add to kart</Text>
+            onPress={() => addProduct({ id, name, price, description, image })}
+          >
+            <Text style={styles.buttonTextAdd}>Add to cart</Text>
           </Pressable>
         )}
       </View>
@@ -68,15 +71,8 @@ const styles = StyleSheet.create({
   container: {
     height:
       Platform.OS === 'ios'
-        ? Dimensions.get('window').height -
-          sizes.headerHeight -
-          sizes.ctaButton * 2 +
-          10 -
-          50
-        : Dimensions.get('window').height -
-          sizes.headerHeight -
-          sizes.ctaButton * 2 +
-          10,
+        ? Dimensions.get('window').height - sizes.headerHeight - sizes.ctaButton * 2 + 10 - 50
+        : Dimensions.get('window').height - sizes.headerHeight - sizes.ctaButton * 2 + 10,
   },
   imageContainer: {
     borderBottomStartRadius: 8,

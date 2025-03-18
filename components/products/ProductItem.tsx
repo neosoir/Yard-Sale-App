@@ -41,7 +41,7 @@ const ProductItem = ({item}) => {
       </Link>
       <View style={styles.itemData}>
         <View style={styles.itemMeta}>
-          <Text style={styles.itemPrice}>{`$ ${price}`}</Text>
+          <Text style={styles.itemPrice}>{price}</Text>
           <Text style={styles.itemTitle}>{name}</Text>
         </View>
         <Pressable onPress={handlerPressProductBtn}>
