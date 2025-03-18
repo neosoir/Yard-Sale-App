@@ -1,15 +1,13 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { StyleSheet, Dimensions, Text, View, Image, Pressable } from 'react-native';
-
+import { useRouter } from 'expo-router';  
 import {colors} from '@/resources/constants';
-
-
 import Context from '@/context/Context';
 import addIcon from '@/assets/images/product/add-to-cart-icon.png';
 import removeIcon from '@/assets/images/product/remove-from-cart-icon.png';
 
-const ProductItem = (props) => {
-  const { item, navigation } = props;
+const ProductItem = ({item}) => {
+  const router = useRouter();  
   const { id, name, image, price } = item;
   const {cart, thisProductIsInCart, deleteProduct, addProduct} = useContext(Context);
   const [productBtnIcon, setProductBtnIcon] = useState();
@@ -32,9 +30,7 @@ const ProductItem = (props) => {
 
   return (
     <View key={id} style={styles.itemContainer}>
-      <Pressable
-        onPress={() => navigation.navigate('Product Details', { product: item })}
-      >
+      <Pressable onPress={() => router.push(`/product-details/${id}`)}> 
         <Image
           resizeMode="cover"
           style={styles.itemImage}
