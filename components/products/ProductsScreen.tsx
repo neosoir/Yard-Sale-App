@@ -9,16 +9,11 @@ import Context from '../../context/Context';
 const ProductsScreen = (props) => {
   const { products } = useContext(Context);
 
-  // Extraemos los productos correctamente
-  const productList = products?.data?.products?.edges?.map((item) => item.node) || [];
-
-  console.log('products:', productList);
-
   return (
     <SafeAreaView>
       <Header {...props} />
       <FlatList
-        data={productList}
+        data={products}
         renderItem={({ item }) => <ProductItem item={item} {...props} />}
         keyExtractor={(item) => item.id}
         numColumns={2}

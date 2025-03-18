@@ -41,11 +41,14 @@ const GlobalState = props => {
     const newProducts = await apiFetch.graphqlFetch(
       `
         {
-          products(first: 10) {
-            edges {
-              node {
+          products(first: 30) {
+            nodes {
+              ... on SimpleProduct {
                 id
                 name
+                price
+                regularPrice
+                salePrice
                 image {
                   sourceUrl
                 }
@@ -55,8 +58,14 @@ const GlobalState = props => {
         }
       `
     );
-    console.log(newProducts);
-    setProducts(newProducts);
+
+    // Filtrar productos vacíos o nulos
+    const filteredProducts = newProducts?.data?.products?.nodes.filter(
+      (product) => product?.id && product?.name && product?.price
+    );
+  
+    console.log('filteredProducts', filteredProducts);
+    setProducts(filteredProducts);
   };
 
   // Fetch products on mount
