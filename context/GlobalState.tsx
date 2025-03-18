@@ -49,6 +49,7 @@ const GlobalState = props => {
                 price
                 regularPrice
                 salePrice
+                description
                 image {
                   sourceUrl
                 }

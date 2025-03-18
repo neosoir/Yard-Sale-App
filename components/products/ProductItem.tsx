@@ -8,7 +8,7 @@ import removeIcon from '@/assets/images/product/remove-from-cart-icon.png';
 
 const ProductItem = ({item}) => {
   const router = useRouter();  
-  const { id, name, image, price } = item;
+  const { id, name, image, price, description } = item;
   const {cart, thisProductIsInCart, deleteProduct, addProduct} = useContext(Context);
   const [productBtnIcon, setProductBtnIcon] = useState();
 
@@ -30,15 +30,15 @@ const ProductItem = ({item}) => {
 
   return (
     <View key={id} style={styles.itemContainer}>
-      <Link href={`/product-details/${id}`} asChild>
-      
-        <Image
-          resizeMode="cover"
-          style={styles.itemImage}
-          source={{ uri: image.sourceUrl }}
-        />
+      <Link
+        href={{
+          pathname: `/product-details/${id}`,
+          params: { id, name, price, description: item.description, image: image.sourceUrl },
+        }}
+        asChild
+      >
+        <Image resizeMode="cover" style={styles.itemImage} source={{ uri: image.sourceUrl }} />
       </Link>
-
       <View style={styles.itemData}>
         <View style={styles.itemMeta}>
           <Text style={styles.itemPrice}>{`$ ${price}`}</Text>
